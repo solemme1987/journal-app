@@ -1,12 +1,36 @@
+import { useSelector } from "react-redux"
+
+import {
+  Box,
+  Divider,
+  Drawer,
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography
+} from "@mui/material"
+
 import { TurnedInNot } from "@mui/icons-material"
-import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material"
 
 
 export const SideBar = ({ drawerWidth }) => {
+
+
+
+  const { displayName } = useSelector(state => state.auth)
+
+
   return (
     <Box
       component='nav'
-      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+      sx={{
+        width: { sm: drawerWidth },
+        flexShrink: { sm: 0 }
+      }}
     >
       <Drawer
         variant="permanent" //puede ser temporal
@@ -19,7 +43,7 @@ export const SideBar = ({ drawerWidth }) => {
 
         <Toolbar>
           <Typography variant='h6' noWrap component='div'>
-            Rocardo Cortés
+            { displayName }
           </Typography>
         </Toolbar>
         <Divider />
@@ -34,8 +58,8 @@ export const SideBar = ({ drawerWidth }) => {
                   </ListItemIcon>
 
                   <Grid container>
-                     <ListItemText primary={ text }/>
-                     <ListItemText secondary={ 'Lorem ipsum dolor sit amet consectetur adipisicing elit.' }/>
+                    <ListItemText primary={text} />
+                    <ListItemText secondary={'Lorem ipsum dolor sit amet consectetur adipisicing elit.'} />
                   </Grid>
 
                 </ListItemButton>

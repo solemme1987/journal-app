@@ -1,10 +1,10 @@
-import { Button, Grid, Link, TextField, Typography } from "@mui/material"
+import { Alert, Button, Grid, Link, TextField, Typography } from "@mui/material"
 import { Link as RouterLink } from "react-router-dom"
 import { AuthLayout } from "../layout/AuthLayout"
 import { PersonAddAlt } from "@mui/icons-material"
 import { useForm } from "../../hooks"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useMemo, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { startCreatingUserWithEmailPassword } from "../../store/auth"
 
 const formData = {
@@ -14,7 +14,7 @@ const formData = {
 }
 
 const formValidations = {
-  
+
   // La que esta comentada es la del curso  la otra es la mia
   // email: [(value) => value.includes('@'), 'El correo debe tener una arroba'],
   email: [(value) => {
@@ -23,14 +23,15 @@ const formValidations = {
   }, 'Correo Debe tener un formato válido'],
 
   // password: [(value) => value.length >= 6, 'El password debe tener mas de 6 letras'],
-  password: [
+  /* password: [
     (value) => {
       // Expresión regular para validar el formato de una contraseña
       const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d)(?=.{8,})/;
       return passwordRegex.test(value);
     },
     'La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un carácter especial y un número'
-  ],
+  ], */
+  password: [(value) => value.length >= 6, 'El password debe tener mas de 6 letras'],
   displayName: [(value) => value.length >= 1, 'El nombre es obligatorio'],
 }
 
@@ -38,6 +39,8 @@ const formValidations = {
 export const RegisterPage = () => {
 
   const dispatch = useDispatch()
+  const { status, errorMessage } = useSelector(state => state.auth)
+  const isCheckingAutentication = useMemo(() => status === 'checking', [status])
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   const {
@@ -52,17 +55,17 @@ export const RegisterPage = () => {
     event.preventDefault()
     setFormSubmitted(true)
 
-    if( !isFormValid ) return;// si el formulario no es valido, hasta aqui llega el codigo
+    if (!isFormValid) return;// si el formulario no es valido, hasta aqui llega el codigo
 
-    dispatch( startCreatingUserWithEmailPassword(formState) )
- 
+    dispatch(startCreatingUserWithEmailPassword(formState))
+
   }
 
   return (
 
     <AuthLayout title='Crear una cuenta'>
       {/* <h1>Formulario: {isFormValid ? 'Válido' : 'Invalido'}</h1> */}
-      <form onSubmit={onSubmit} >
+      <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster">
         <Grid container>
 
           {/* Nombre */}
@@ -114,8 +117,25 @@ export const RegisterPage = () => {
 
           {/* Botones  */}
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
+
+            <Grid
+              item
+              xs={12}
+              display={!!errorMessage ? '' : 'none'}// si el erro viene muestra el mensaje 
+                                                    // si no viene pone display:none
+            >
+              <Alert severity="error">
+                {errorMessage}
+              </Alert>
+            </Grid>
+
             <Grid item xs={12} >
-              <Button type="submit" variant="contained" fullWidth>
+              <Button
+                disabled={isCheckingAutentication}
+                type="submit"
+                variant="contained"
+                fullWidth
+              >
                 <PersonAddAlt />
                 <Typography sx={{ ml: 1 }}>Crear cuenta</Typography>
               </Button>
