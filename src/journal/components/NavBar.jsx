@@ -33,7 +33,7 @@ export const NavBar = ({ drawerWidth }) => {
           <Typography variant='h6' noWrap component='div'> JournalApp </Typography>
           <Tooltip title="Salir"  arrow >
             <IconButton
-              color='error'
+              style={{color: 'white'}}
               onClick={onLogout}
             >
               <Logout />

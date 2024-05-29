@@ -23,7 +23,7 @@ export const NoteView = () => {
 
 
   const dispatch = useDispatch()
-  const { active:note, messageSaved, isSaving } = useSelector(state => state.journal)
+  const { active: note, messageSaved, isSaving } = useSelector(state => state.journal)
   const { body, title, data, onInputChange, formState } = useForm(note)
 
   const fileInputRef = useRef()
@@ -45,13 +45,13 @@ export const NoteView = () => {
   const onSaveNote = () => {
     dispatch(startSaveNote())
   }
-  
+
   // subiendo archivos
   const onFileInputChange = ({ target }) => {
     if (target.files === 0) return
-    dispatch( startUploadingFiles( target.files))
+    dispatch(startUploadingFiles(target.files))
   }
-   
+
   // formateando la fecha de creacion de la nota
   const dateString = useMemo(() => {
     const newDate = new Intl.DateTimeFormat('es-ES', options).format(data);
@@ -59,9 +59,9 @@ export const NoteView = () => {
   }, [data])
 
 
-  const onDelete = () =>{
-    
-    dispatch( startDeletingNote() )
+  const onDelete = () => {
+
+    dispatch(startDeletingNote())
   }
 
   return (
@@ -83,7 +83,7 @@ export const NoteView = () => {
 
       <Grid item>
 
-        <input
+        {/*   <input
           type="file"
           multiple
           ref={ fileInputRef }
@@ -102,9 +102,9 @@ export const NoteView = () => {
           >
             <UploadOutlined />
           </IconButton>
-        </Tooltip>
-      
-      {/* GUARDAR */}
+        </Tooltip> */}
+
+        {/* GUARDAR */}
         <Button
           disabled={isSaving}
           color='primary'
@@ -142,19 +142,44 @@ export const NoteView = () => {
         />
       </Grid>
 
-      <Grid container justifyContent='end' alignItems='center'> 
-        <Button 
-          onClick={ onDelete }
+      <Grid container justifyContent='space-between' alignItems='center' >
+        {/* Input para subir archivos oculto y boton para simular clic y abrirlo */}
+        <input
+          type="file"
+          multiple
+          ref={fileInputRef}
+          onChange={onFileInputChange}
+          style={{ display: 'none' }}
+        />
+
+        <Tooltip title="Subir imagenes" placement="right" arrow>
+          <IconButton
+            color="primary"
+            disabled={isSaving}
+            sx={{ mr: 2 }}
+            //Gracis al useRef podemos simular un clic en el input de arriba 
+            // que tiene display none
+            onClick={() => fileInputRef.current.click()}
+          >
+            <UploadOutlined />
+            
+          </IconButton>
+        </Tooltip>
+        {/* END  */}
+
+        <Button
+          onClick={onDelete}
           sx={{ mt: 2 }}
           color="error"
         >
-          <DeleteOutline/>
+          <DeleteOutline />
           Borrar nota
         </Button>
+
       </Grid>
 
       {/* Image Gallery */}
-      <ImageGallery images={ note.imageURLs }/>
+      <ImageGallery images={note.imageURLs} />
 
     </Grid>
   )
