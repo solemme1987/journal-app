@@ -42,6 +42,7 @@ export const startNewNote = () => {
       title: '',
       body: '',
       data: new Date().getTime(),
+      imageURLs: [],
     }
 
     /* creamos la nota en Firestore Database */

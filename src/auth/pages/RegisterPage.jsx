@@ -23,15 +23,15 @@ const formValidations = {
   }, 'Correo Debe tener un formato válido'],
 
   // password: [(value) => value.length >= 6, 'El password debe tener mas de 6 letras'],
-  /* password: [
+  password: [
     (value) => {
       // Expresión regular para validar el formato de una contraseña
       const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d)(?=.{8,})/;
       return passwordRegex.test(value);
     },
     'La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un carácter especial y un número'
-  ], */
-  password: [(value) => value.length >= 6, 'El password debe tener mas de 6 letras'],
+  ],
+  /* password: [(value) => value.length >= 6, 'El password debe tener mas de 6 letras'], */
   displayName: [(value) => value.length >= 1, 'El nombre es obligatorio'],
 }
 
