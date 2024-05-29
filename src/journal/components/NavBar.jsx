@@ -1,22 +1,22 @@
-import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material"
+import { AppBar, Grid, IconButton, Toolbar, Tooltip, Typography } from "@mui/material"
 import { Logout, Menu } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { startLogout } from "../../store/auth"
 
-export const NavBar = ({ drawerWidt = 240 }) => {
+export const NavBar = ({ drawerWidth }) => {
 
   const dispatch = useDispatch()
 
   const onLogout = () => {
-    dispatch( startLogout() )
+    dispatch(startLogout())
   }
 
   return (
     <AppBar
       position='fixed'
       sx={{
-        width: { sm: `calc(100% - ${drawerWidt}px)` },
-        ml: { sm: `${drawerWidt}px` },
+        width: { sm: `calc(100% - ${drawerWidth}px)` },
+        ml: { sm: `${drawerWidth}px` },
       }}
     >
       <Toolbar>
@@ -31,14 +31,14 @@ export const NavBar = ({ drawerWidt = 240 }) => {
         <Grid container direction='row' justifyContent='space-between' alignItems='center'>
 
           <Typography variant='h6' noWrap component='div'> JournalApp </Typography>
-
-          <IconButton 
-            color='error'
-            onClick={ onLogout }
-          >
-             <Logout />
-          </IconButton>
-           
+          <Tooltip title="Salir"  arrow >
+            <IconButton
+              color='error'
+              onClick={onLogout}
+            >
+              <Logout />
+            </IconButton>
+          </Tooltip>
         </Grid>
 
 

@@ -9,6 +9,12 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     createValidators()
   }, [formState])
    
+  // ESto lo hicimos con el objetivo de que cada vez que se 
+  // haga clic en una nota pueda actualziar los valores del formulario 
+  //con los datos nuevos
+  useEffect(() => {
+    setFormState( initialForm )
+  }, [initialForm])
 
   const isFormValid = useMemo( () => {
     for (const formValue of Object.keys( formValidation )) {

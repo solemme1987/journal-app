@@ -2,11 +2,11 @@ import { Box, Grid, Toolbar, Typography } from "@mui/material"
 import { NavBar, SideBar } from "../components"
 
 
-const drawerWidth = 240
+const drawerWidth = 260
 
 export const JournalLayout = ({ children }) => {
 
-
+  
   return (
     <Box sx={{ display: 'flex' }} className="animate__animated animate__fadeIn animate__faster">
 
